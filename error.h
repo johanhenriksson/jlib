@@ -4,9 +4,10 @@
 #include <stdlib.h>
 
 /* THROW macros for common error handling */
-#define THROW(r) if(r != E_SUCCESS) return r;
-#define THROW_NULL(a) if (a == NULL) return E_NULL_PTR;
-#define THROW_ALLOC(a) if (a == NULL) return E_ALLOC_FAIL;
+#define THROW(r) if(r != E_SUCCESS) return r
+#define THROW_NULL(a) if (a == NULL) return E_NULL_PTR
+#define THROW_ALLOC(a) if (a == NULL) return E_ALLOC_FAIL
+#define THROW_BOUNDS(v,a,b) if (v < a || v >= b) return E_BOUNDS
 
 /* CATCH macro aborts execution on failure and prints an error message */
 #define CATCH(e) if (e != E_SUCCESS) { error_print(e); exit(e); }

@@ -16,6 +16,7 @@ struct array_list_t {
 error_t array_list_alloc(array_list_t**);
 error_t array_list_free(array_list_t**);
 
-error_t array_list_get(array_list_t*, int);
+error_t array_list_get(array_list_t*, int, void**);
+error_t array_list_append(array_list_t*, void*);
 
 #endif

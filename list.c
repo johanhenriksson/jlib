@@ -5,30 +5,25 @@
 /** Allocate a list node */
 error_t list_alloc(list_t** ptr) 
 {
-    if (ptr == NULL)
-        return E_NULL_PTR;
+    THROW_NULL(ptr);
     *ptr = NULL;
 
     list_t* list = malloc(sizeof(list_t));
-    if (list == NULL)
-        return E_ALLOC_FAIL;
+    THROW_ALLOC(list);
 
     list->next = NULL;
     list->node = NULL;
-
     *ptr = list;
 
     return E_SUCCESS;
 }
 
-error_t list_free(list_t** list)
+error_t list_free(list_t** ptr)
 {
-    if (list == NULL)
-        return E_NULL_PTR;
+    THROW_NULL(ptr);
 
-    list_t* current = *list;
-    if (current == NULL)
-        return E_NULL_PTR;
+    list_t* current = *ptr;
+    THROW_NULL(current);
 
     while(current->next != NULL) 
     {
@@ -39,13 +34,13 @@ error_t list_free(list_t** list)
         free(temp);
     }
 
-    *list = NULL;
+    *ptr = NULL;
     return E_SUCCESS;
 }
 
 error_t list_append(list_t* list, void* element) 
 {
-    error_t result;
+    THROW_NULL(list);
 
     /* special case: empty list */
     if (list->node == NULL) {
@@ -55,15 +50,14 @@ error_t list_append(list_t* list, void* element)
 
     /* find tail */
     list_t* tail; 
+    error_t result;
     result = list_tail(list, &tail);
-    if (result != E_SUCCESS)
-        return result;
+    THROW(result);
 
     /* create a node */
     list_t* node;
     result = list_alloc(&node);
-    if (result != E_SUCCESS)
-        return result;
+    THROW(result);
 
     node->node = element;
     tail->next = node;
@@ -73,8 +67,7 @@ error_t list_append(list_t* list, void* element)
 
 error_t list_tail(list_t* head, list_t** tail) 
 {
-    if (head == NULL)
-        return E_NULL_PTR;
+    THROW_NULL(head);
 
     list_t* current = head;
     while(current->next != NULL)
@@ -86,8 +79,7 @@ error_t list_tail(list_t* head, list_t** tail)
 
 error_t list_count(list_t* head, int* count) 
 {
-    if (head == NULL)
-        return E_NULL_PTR;
+    THROW_NULL(head);
 
     *count = 0;
 
@@ -105,8 +97,8 @@ error_t list_count(list_t* head, int* count)
 
 error_t list_remove(list_t** head, void* element)
 {
-    if (head == NULL || element == NULL)
-        return E_NULL_PTR;
+    THROW_NULL(head);
+    THROW_NULL(element);
 
     list_t* node = *head;
     list_t* prev = NULL;

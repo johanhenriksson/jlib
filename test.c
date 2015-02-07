@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "list.h"
+#include "array_list.h"
 #include "map.h"
 #include "error.h"
 
@@ -21,6 +22,21 @@ int main(int argc, char* argv[])
     }
 
     list_free(&list);
+
+    /* array list */
+
+    array_list_t* arlist;
+    array_list_alloc(&arlist);
+
+    array_list_append(arlist, "hi");
+    array_list_append(arlist, "hi");
+    array_list_append(arlist, "hi");
+    array_list_append(arlist, "hi");
+    array_list_append(arlist, "hi");
+    array_list_append(arlist, "hi");
+    array_list_append(arlist, "hi");
+    array_list_append(arlist, "hi");
+    array_list_append(arlist, "hi");
 
     /* map */
     map_t* map;
@@ -43,7 +59,9 @@ int main(int argc, char* argv[])
         printf("get error: %d\n", r);
     printf("stored value at 'hello': %d\n", value);
 
-    r = map_get_int(map, "not_there", &value);
+    map_delete(map, "hello");
+
+    r = map_get_int(map, "hello", &value);
     CATCH(r);
 
     map_free(&map);
