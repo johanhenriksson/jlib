@@ -5,10 +5,31 @@
 #include "array_list.h"
 #include "map.h"
 #include "error.h"
+#include "string.h"
 
 int main(int argc, char* argv[]) 
 {
     error_t r;
+
+    string_t* base_str;
+    r = string_const(&base_str, "hello world!");
+    CATCH(r);
+
+    printf("source string: %s\n", base_str->ptr);
+
+    string_t* substr;
+    r = string_substr(base_str, &substr, 0, 5);
+    printf("substring: %s\n", substr->ptr);
+
+    array_list_t* words;
+    r = string_split(base_str, &words, ' ');
+    CATCH(r);
+
+    for(int i = 0; i < words->count; i++) {
+        string_t* word = (string_t*)words->values->ptr[i];
+        printf("word: %s\n", word->ptr);
+    }
+
 
     /* linked list */
     list_t* list;

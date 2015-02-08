@@ -19,3 +19,9 @@ void error_print(error_t code)
 
     printf("Error: %s\n", _ERROR_MSG[code]);
 }
+
+const char* error_msg(error_t code) {
+    if (code >= ERROR_COUNT)
+        return "Invalid error code";
+    return _ERROR_MSG[code];
+}
