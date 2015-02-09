@@ -15,12 +15,6 @@ int main(int argc, char* argv[])
     r = string_const(&base_str, "hello world!");
     CATCH(r);
 
-    printf("source string: %s\n", base_str->ptr);
-
-    string_t* substr;
-    r = string_substr(base_str, &substr, 0, 5);
-    printf("substring: %s\n", substr->ptr);
-
     array_list_t* words;
     r = string_split(base_str, &words, ' ');
     CATCH(r);
@@ -30,6 +24,9 @@ int main(int argc, char* argv[])
         printf("word: %s\n", word->ptr);
     }
 
+    string_t* joined;
+    string_join_with((string_t*)words->values->ptr[0], (string_t*)words->values->ptr[1], " and ", &joined);
+    printf("joined: %s\n", joined->ptr);
 
     /* linked list */
     list_t* list;

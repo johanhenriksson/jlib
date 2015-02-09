@@ -82,3 +82,50 @@ error_t array_list_index(array_list_t* list, void* value, int* index)
     return E_NOT_FOUND;
 }
 
+error_t array_list_wrap(array_list_t** ptr, array_t* array)
+{
+    THROW_NULL(array);
+    THROW_NULL(ptr);
+    *ptr = NULL;
+
+    array_list_t* list = (array_list_t*)malloc(sizeof(array_list_t));
+    THROW_ALLOC(list);
+
+    list->count = 0;
+    list->values = array;
+
+    /* count non-NULL elements */
+    for(int i = 0; i < array->length; i++) {
+        void* val = array->ptr[i];
+        if (val != NULL)
+            list->count++;
+    }
+
+    *ptr = list;
+    return E_SUCCESS;
+}
+
+error_t array_list_extract(array_list_t** ptr, array_t** dest)
+{
+    THROW_NULL(ptr);
+    THROW_NULL(dest);
+
+    error_t e;
+    array_t* array;
+    array_list_t* list = *ptr;
+    THROW_NULL(list);
+
+    array = list->values;
+
+    /* resize array to actual size of list */
+    e = array_realloc(&array, list->count);
+    THROW(e);
+
+    *dest = array;
+
+    /* free array list memory */
+    free(list);
+    *ptr = NULL;
+
+    return E_SUCCESS;
+}

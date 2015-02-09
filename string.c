@@ -134,3 +134,49 @@ substr_error:
     array_list_free(&list);
     return r;
 }
+
+error_t string_join(string_t* a, string_t* b, string_t** output) {
+    return string_join_with(a, b, "", output);
+}
+
+error_t string_join_with(string_t* a, string_t* b, const char* spacing, string_t** output)
+{
+    THROW_NULL(a);
+    THROW_NULL(b);
+    THROW_NULL(output);
+    *output = NULL;
+
+    error_t e;
+    string_t* c;
+
+    size_t spacelen = strlen(spacing);
+    size_t length = a->length + spacelen + b->length;
+
+    /* Allocate space for the new string */
+    e = string_alloc(&c, length); 
+    THROW(e);
+
+    /* Copy into new string */
+    strncpy(c->ptr, a->ptr, a->length);
+    strncpy(c->ptr + a->length, spacing, spacelen);
+    strncpy(c->ptr + a->length + spacelen, b->ptr, b->length);
+    c->length = length;
+    
+    *output = c;
+    return E_SUCCESS;
+}
+
+error_t string_char_index(string_t* source, char needle, size_t* index)
+{
+    THROW_NULL(source);
+    THROW_NULL(index);
+
+    for(size_t i = 0; i < source->length; i++) {
+        if (source->ptr[i] == needle) {
+            *index = i;
+            return E_SUCCESS;
+        }
+    }
+
+    return E_NOT_FOUND;
+}
