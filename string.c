@@ -21,7 +21,6 @@ error_t string_free(string_t** ptr)
     string_t* string = *ptr;
     THROW_NULL(string);
 
-    free(string->ptr);
     free(string);
     *ptr = NULL;
 
@@ -72,7 +71,7 @@ error_t string_substr(string_t* source, string_t** dest, size_t index, size_t co
     THROW_NULL(dest);
     *dest = NULL;
 
-    if (index + count > source->length) 
+    if (count == 0 || index + count > source->length) 
         return E_BOUNDS;
 
     error_t r;

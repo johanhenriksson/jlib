@@ -3,10 +3,16 @@
 
 #include "jtest.h"
 
+int jtest_asserts = 0;
+int jtest_tests   = 0;
+
 int jtest_run(TestCase_f* tests) 
 {
     int error;
-    int ran = 0;
+    jtest_tests   = 0;
+    jtest_asserts = 0;
+
+    printf("\n** Running jtest **\n\n");
 
     for(int t = 0; ; t++)
     {
@@ -18,11 +24,11 @@ int jtest_run(TestCase_f* tests)
         if (!error)
             printf("Pass\n");
 
-        ran++;
+        jtest_tests++;
     }
 
     printf("\n");
-    printf("Ran %d tests.\n", ran);
+    printf("Ran %d tests, %d assertations.\n", jtest_tests, jtest_asserts);
     return error;
 }
 
