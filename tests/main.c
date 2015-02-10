@@ -10,6 +10,8 @@ int test_string_split();
 /* List tests */
 int test_list_alloc();
 int test_list_free();
+int test_list_append();
+int test_list_length();
 
 int main(int argc, char* argv[])
 {
@@ -23,6 +25,8 @@ int main(int argc, char* argv[])
         /* Linked List */
         &test_list_alloc,
         &test_list_free,
+        &test_list_append,
+        &test_list_length,
 
         /* End tests list with NULL */
         NULL,

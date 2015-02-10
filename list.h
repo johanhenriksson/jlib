@@ -11,17 +11,20 @@ typedef struct list_t list_t;
 
 /* Represents a node in a single-linked list */
 struct list_t {
-    void*   node;
     list_t* next;
+    list_t* prev;
+    void*   node;
 };
 
 error_t list_alloc(list_t**);
 error_t list_free(list_t**);
+error_t list_free_node(list_t**);
 
 error_t list_append(list_t*, void*);
 error_t list_tail(list_t*, list_t**); 
+error_t list_head(list_t*, list_t**);
 error_t list_find(list_t*, void*, list_t**);
-error_t list_remove(list_t**, void*);
+error_t list_remove(list_t**); 
 
 error_t list_length(list_t*, int*);
 error_t list_contains(list_t*, void*, bool*);

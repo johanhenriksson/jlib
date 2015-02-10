@@ -166,7 +166,7 @@ error_t map_delete(map_t* map, const char* key)
         if (strcmp(key, map_node->key) == 0) {
             /* found it! */
             map_node_free(&map_node);
-            list_remove(&bucket, node);
+            list_remove(&node);
             return E_SUCCESS;
         }
     }
